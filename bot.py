@@ -29,8 +29,9 @@ logger = logging.getLogger(__name__)
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "Я бот для распознавания голосовых сообщений.(разработал - @przedviralem1) \n\n"
-        "Просто отправь мне голосовое сообщение, и я конвертирую его в текст.\n\n"
+        "Я бот для распознавания голосовых сообщений.\n\n"
+        "(разработал - @przedviralem1)\n\n"
+        "Просто отправь/перекинь мне голосовое сообщение, и я конвертирую его в текст.\n\n"
         "Могу зависнуть на 50 - 60 секунд из-за неактива."
     )
     await update.message.reply_text(welcome_message)
