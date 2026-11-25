@@ -96,6 +96,8 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             max_text_length = 4096 - 100  
             
             if len(formatted_text) > max_text_length:
+                # Удаляем статусное сообщение
+                await status_message.delete()
                 
                 chunk_size = 3800  
                 chunks = []
@@ -117,14 +119,17 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 if current_chunk:
                     chunks.append('\n\n'.join(current_chunk))
                 
+                # Отправляем первый chunk как reply на голосовое
                 for i, chunk in enumerate(chunks):
-                    if i == len(chunks) - 1:
-                        await update.message.reply_text(f"{chunk}")
+                    if i == 0:
+                        await update.message.reply_text(chunk)
                     else:
                         await update.message.reply_text(chunk)
             else:
-                full_response = f"{formatted_text}"
-                await status_message.edit_text(full_response, parse_mode='Markdown')
+                # Удаляем статусное сообщение
+                await status_message.delete()
+                # Отправляем текст как reply на голосовое сообщение
+                await update.message.reply_text(formatted_text)
         else:
             await status_message.edit_text(
                 "Не удалось распознать речь в голосовом сообщении."
