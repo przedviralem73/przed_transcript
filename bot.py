@@ -122,9 +122,15 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chunks.append('\n\n'.join(current_chunk))
                 
                 for chunk in chunks:
-                    await update.message.reply_text(chunk)
+                    await update.message.reply_text(
+                        chunk,
+                        reply_to_message_id=update.message.message_id
+                    )
             else:
-                await update.message.reply_text(formatted_text)
+                await update.message.reply_text(
+                    formatted_text,
+                    reply_to_message_id=update.message.message_id
+                )
         else:
             await status_message.edit_text(
                 "Не удалось распознать речь в голосовом сообщении."
