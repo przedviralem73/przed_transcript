@@ -29,9 +29,9 @@ logger = logging.getLogger(__name__)
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
-        "Я бот для распознавания голосовых сообщений.\n\n"
-        "(разработал - @przedviralem1)\n\n"
-        "Просто отправь/перекинь мне голосовое сообщение, и я конвертирую его в текст.\n\n"
+        "Я бот для распознавания голосовых сообщений.\n"
+        "(разработал - @przedviralem1)\n"
+        "Просто отправь/перекинь мне голосовое сообщение, и я конвертирую его в текст.\n"
         "Могу зависнуть на 50 - 60 секунд из-за неактива."
     )
     await update.message.reply_text(welcome_message)
@@ -92,13 +92,10 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         if recognized_text:
             formatted_text = format_recognized_text(recognized_text)
-            
-            response_header = f"Распознанный текст:\n\n"
-            
-            max_text_length = 4096 - len(response_header) - 100  
+    
+            max_text_length = 4096 - 100  
             
             if len(formatted_text) > max_text_length:
-                await status_message.edit_text(response_header, parse_mode='Markdown')
                 
                 chunk_size = 3800  
                 chunks = []
@@ -126,7 +123,7 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     else:
                         await update.message.reply_text(chunk)
             else:
-                full_response = f"{response_header}{formatted_text}"
+                full_response = f"{formatted_text}"
                 await status_message.edit_text(full_response, parse_mode='Markdown')
         else:
             await status_message.edit_text(
