@@ -95,9 +95,12 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
             max_text_length = 4096 - 100  
             
-            if len(formatted_text) > max_text_length:
+            try:
                 await status_message.delete()
-                
+            except:
+                pass
+            
+            if len(formatted_text) > max_text_length:
                 chunk_size = 3800  
                 chunks = []
                 
@@ -118,13 +121,9 @@ async def voice_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 if current_chunk:
                     chunks.append('\n\n'.join(current_chunk))
                 
-                for i, chunk in enumerate(chunks):
-                    if i == 0:
-                        await update.message.reply_text(chunk)
-                    else:
-                        await update.message.reply_text(chunk)
+                for chunk in chunks:
+                    await update.message.reply_text(chunk)
             else:
-                await status_message.delete()
                 await update.message.reply_text(formatted_text)
         else:
             await status_message.edit_text(
