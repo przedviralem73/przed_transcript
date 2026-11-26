@@ -4,7 +4,8 @@
 
 и изменить в файле .env.example и потом переименовать на .env
 
-ЗАПУСК ЛОКАЛЬНО:
+ЗАПУСК ЛОКАЛЬНО:\
+
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
